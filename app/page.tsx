@@ -32,6 +32,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import Orders from "@/components/ui/features/orders";
 
 export default function Dashboard() {
   return (
@@ -223,7 +224,12 @@ export default function Dashboard() {
           <div className="flex items-center">
             <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
           </div>
-          <div
+
+          <div>
+            <Orders />
+          </div>
+
+          {/* <div
             className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
             x-chunk="dashboard-02-chunk-1"
           >
@@ -236,7 +242,7 @@ export default function Dashboard() {
               </p>
               <Button className="mt-4">Add Product</Button>
             </div>
-          </div>
+          </div> */}
         </main>
       </div>
     </div>
