@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   Bell,
@@ -33,8 +35,33 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import Orders from "@/components/ui/features/orders";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const formSchema = z.object({
+  search: z.string(),
+});
 
 export default function Dashboard() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    // Resolver will validate our Schema.
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      search: "",
+    },
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = form;
+
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    console.log("Submit", data);
+  };
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
@@ -189,13 +216,14 @@ export default function Dashboard() {
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
                   placeholder="Search products..."
                   className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
+                  {...register("search")}
                 />
               </div>
             </form>
